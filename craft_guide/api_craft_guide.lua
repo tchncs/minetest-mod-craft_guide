@@ -22,11 +22,11 @@ craft_guide = {}
 
 -- enable or disable you need feature
 
-craft_guide.you_need=true
+craft_guide.you_need=false
 
 -- enable or disable copy craft recipe to crafting grid feature
 
-craft_guide.copy_button=true
+craft_guide.copy_button=false
 
 
 -- show items which only have have craft recipes of type "fuel". This are for example: tree trunks, saplings, .. etc.
@@ -252,8 +252,8 @@ craft_guide.get_craft_guide_formspec = function(meta, search, page, alternate)
 		alternates = #crafts
 	end
 	local backbutton=""
-	if meta:get_string("saved_search")~="|" then
-		backbutton="button[6.3,5.8;2.7,1;back_button;<--- Back]"
+	if meta:get_string("search")~="" then
+		backbutton="button[6.3,5.8;1.7,1;back_button;Show all]"
 	end
 	local changeable_part=""
 	if meta:get_string("switch")=="youneed" and craft_guide.you_need then
@@ -295,9 +295,8 @@ craft_guide.get_craft_guide_formspec = function(meta, search, page, alternate)
 	else
 		formspec=formspec.."list[current_name;main;0,0;14,5;"..tostring(start).."]"
 	end
-	formspec=formspec.."label[0,5;--== Learn to Craft ==--]"
-
-		.."label[0,5.4;Drag any item to the Output box to see the]"
+	formspec=formspec..
+		"label[0,5.4;Drag any item to the Output box to see the]"
 		.."label[0,5.8;craft. Save your favorite items in Bookmarks.]"
 
 		.."field[6,5.4;2.3,1;craft_guide_search_box;;"..tostring(search).."]"
@@ -367,7 +366,7 @@ craft_guide.get_craft_guide_formspec = function(meta, search, page, alternate)
 			end
 		end
 		formspec=formspec..changeable_part
-		.."button_exit[0,9.2;1,0.8;close_mm;ESC]"
+		.."button_exit[0,9.2;1,0.8;close_mm;Х]"
 
 
 	meta:set_string("saved_formspec",formspec)
@@ -820,7 +819,7 @@ craft_guide.on_receive_fields = function(pos, formname, fields, player)
 
 	-- go back to search result
 	if fields.back_button then
-		if meta:get_string("switch")=="youneed" and meta:get_string("poslist")=="up" then
+		--[[if meta:get_string("switch")=="youneed" and meta:get_string("poslist")=="up" then
 			meta:set_string("switch","bookmarks")
 		end		
 		local saved_search = meta:get_string("saved_search")
@@ -830,8 +829,8 @@ craft_guide.on_receive_fields = function(pos, formname, fields, player)
 			page=tonumber(meta:get_string("saved_page"))
 			pages=tonumber(meta:get_string("saved_pages"))
 			meta:set_string("saved_search", "|")
-		end
-		update_search=true
+		end--]]
+		search=""
 	end
 
 	--lock current state
