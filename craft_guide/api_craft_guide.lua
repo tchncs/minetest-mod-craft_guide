@@ -819,7 +819,7 @@ craft_guide.on_receive_fields = function(pos, formname, fields, player)
 
 	-- go back to search result
 	if fields.back_button then
-		--[[if meta:get_string("switch")=="youneed" and meta:get_string("poslist")=="up" then
+		-if meta:get_string("switch")=="youneed" and meta:get_string("poslist")=="up" then
 			meta:set_string("switch","bookmarks")
 		end		
 		local saved_search = meta:get_string("saved_search")
@@ -829,7 +829,8 @@ craft_guide.on_receive_fields = function(pos, formname, fields, player)
 			page=tonumber(meta:get_string("saved_page"))
 			pages=tonumber(meta:get_string("saved_pages"))
 			meta:set_string("saved_search", "|")
-		end--]]
+		end
+		update_search=true
 		search=""
 	end
 
